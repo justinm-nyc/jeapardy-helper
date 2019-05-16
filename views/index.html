@@ -118,6 +118,9 @@
                         }
                     })
                     this.tloaded = loadedTeamsArray
+                    if(this.tloaded.length == 0){
+                        this.setSelectedTeam('No team has been selected' )
+                    }
                 },
                 setSelectedTeam: function (teamName){
                     this.selectedTeam = teamName
