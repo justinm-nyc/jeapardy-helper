@@ -1,54 +1,60 @@
 <html>
 <head>
-    <title>Jeapardy Helper | Add Users and Buzz</title>
+    <title>Jeopardy Helper | Add Users and Buzz</title>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-    <link rel="stylesheet" href="/app.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light">
         <div class="container">
             <span class="navbar-brand wide">
-                <span class="title">Jeapardy Helper</span>
+                <span class="title">Jeopardy Helper</span>
             </span>
         </div>
     </nav>
 
     <div id="example-1">
-        <div class="container" style="margin-top: 50px">
-            <a href="#" class="btn btn-primary btn-sm" id="add-team-btn" v-on:click="createTeamAndRedirect()">Add a team</a>
-            <a href="#" class="btn btn-primary btn-sm" id="clear-teams-btn" v-on:click="deleteTeams()">Clear Teams</a>
-            <a href="#" class="btn btn-primary btn-sm" id="clear-teams-btn" v-on:click="clearClickedTime()">Clear Buzzer Times</a>
-            <hr>
-            <ul>
-                <ul v-for="item in tloaded">
-                    <div class="card">
-                        <a href="#" class="btn" v-on:click="setSelectedTeam(item)">
-                            <div class="card-body">
-                                {{ item }}
-                            </div>
-                        </a>
-                    </div>
-                </ul>
-            </ul>
-        </div>
 
-        <div class="container" style="margin-top: 50px">
-            <h2>Selected Team:</h2>
-            <h1>{{ selectedTeam }} </h1>
-        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 teams-side">                  
+                    <a href="#" class="btn btn-primary btn-sm add-team-button" id="add-team-btn" v-on:click="createTeamAndRedirect()">Add a team</a>
+                    <a href="#" class="btn btn-primary btn-sm clear-teams-button" id="clear-teams-btn" v-on:click="deleteTeams()">Clear Teams</a>
+                    <a href="#" class="btn btn-primary btn-sm clear-buzzer-times-button" id="clear-teams-btn" v-on:click="clearClickedTime()">Clear Buzzer Times</a>
+                    <hr>
 
-        <div class="container" style="margin-top: 50px" v-if="selectedTeam != 'No team has been selected'">
-            <a href="#" class="btn btn-danger btn-sm" id="add-team-btn" v-on:click="updateClickedTime(selectedTeam)">Buzzer</a>
-            <h2>Buzzed Teams:</h2>
-            <ul>
-                <ul v-for="team in orderedBuzzClicks">
-                    <div class="card">
-                        <div class="card-body">
-                            {{ team.name }}
-                        </div>
+                    <div class="col-md-4">
+                        <h2> TEAMS: </h2>
+                        <ul v-for="item in tloaded">
+                            <a href="#" class="" v-on:click="setSelectedTeam(item)">
+                                <div class="media">
+                                    <img src="https://image.flaticon.com/icons/png/128/27/27825.png" height="22" width="22" class="mr-3" alt="...">
+                                    <div class="media-body">
+                                        <h5 class="mt-0">{{ item }}</h5>
+                                    </div>
+                                </div>
+                            </a>
+                        </ul>
                     </div>
-                </ul>
-            </ul>
+                </div>
+
+
+                <div class="col-md-6 buzzer-side">      
+                    <h2>SELECTED TEAM:</h2>
+                    <h1>{{ selectedTeam }} </h1>
+   
+                    <div class="container" style="margin-top: 50px" v-if="selectedTeam != 'No team has been selected'">
+                        <a href="#" class="btn btn-danger btn-lg" id="add-team-btn" v-on:click="updateClickedTime(selectedTeam)">Buzzer</a>
+                        <h2>Buzzed Teams:</h2>
+                        <table class="table">
+                            
+                            <ul v-for="(team, index) in orderedBuzzClicks">
+                                  {{ index+1 }}. {{ team.name }}
+                            </ul>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- development version, includes helpful console warnings -->
@@ -76,8 +82,7 @@
                     this.reloadTeams()
                 },
                 selectedTeam: function (){},
-                buzzedTeams: function (){
-                }
+                buzzedTeams: function (){}
             },
             created() {
                 /**
@@ -109,15 +114,21 @@
                 },
                 reloadTeams: async function(){
                     var loadedTeamsArray = []
+                    var loadedBuzzedTeamsArray = []
                     let result = await axios.get('/teams').then(response => {
                         const teams = response.data
                         for (const key in teams) {
                             if (teams.hasOwnProperty(key)) {
                                 loadedTeamsArray.push(teams[key].name)
+                                if(teams[key].clickedTime != ''){
+                                    loadedBuzzedTeamsArray.push(teams[key])
+                                }  
                             }
                         }
                     })
                     this.tloaded = loadedTeamsArray
+                    this.buzzedTeams = loadedBuzzedTeamsArray
+
                     if(this.tloaded.length == 0){
                         this.setSelectedTeam('No team has been selected' )
                     }
@@ -139,7 +150,6 @@
                     let result = await axios.put('/teams/' + teamName + '/clickedBuzzer')
                     .then(response => {
                         console.log(response.data);
-                        this.fetchBuzzedList()
                     })  
                 },
                 clearClickedTime: async function(){
@@ -148,21 +158,7 @@
                         console.log(response.data);
                         this.buzzedTeams = []
                     })  
-                },
-                fetchBuzzedList: async function(){
-                    this.buzzedTeams = []
-                    let result = await axios.get('/teams').then(response => {
-                        const teams = response.data
-                        for (const key in teams) {
-                            if (teams.hasOwnProperty(key)) {
-                                if(teams[key].clickedTime != ''){
-                                    this.buzzedTeams.push(teams[key])
-                                }                              
-                            }
-                        }
-                    })
-                    console.log(this.buzzedTeams)
-                }                 
+                }             
             }
         })
     </script>

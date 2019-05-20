@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
+var path = require('path')
 // create express app
 const app = express();
 
@@ -30,6 +30,7 @@ mongoose.connect(dbConfig.url, {
 // Define Routes: Static
 // ------------------------------------------------------
 app.get('/', (req, res) => res.sendFile(__dirname + '/views/index.html'))
+app.use(express.static(path.join(__dirname, 'public')));
 
 // ------------------------------------------------------
 // Require Notes routes
