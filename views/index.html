@@ -1,11 +1,20 @@
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <title>Jeopardy Helper | Add Users and Buzz</title>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
     <link rel="stylesheet" href="/css/style.css">
+    <title>Jeopardy Helper | Add Users and Buzz</title>
 </head>
+
 <body>
-    <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container">
             <span class="navbar-brand wide">
                 <img src="/images/jeopardy-logo.png" class="mr-3 logo" alt="...">
@@ -14,55 +23,62 @@
         </div>
     </nav>
 
-    <div id="example-1">
-
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 teams-side">
-                    <div class="col-md-2">               
-                        <a href="#" class="btn btn-primary btn-sm add-team-button" id="add-team-btn" v-on:click="createTeamAndRedirect()">Add a team</a>
-                        <a href="#" class="btn btn-primary btn-sm clear-teams-button" id="clear-teams-btn" v-on:click="deleteTeams()">Clear Teams</a>
-                    </div>
-
-                    <a href="#" class="btn btn-primary btn-sm clear-buzzer-times-button" id="clear-teams-btn" v-on:click="clearClickedTime()">Clear Buzzer Times</a>
-                    <hr>
-
-                    <div class="col-md-4">
-                        <h2> TEAMS: </h2>
-                        <div v-if="tloaded.length == 0">
-                            <h2> No Teams</h2>
+    <main role="main">
+        <div id="example-1">
+            <div class="container teams-side">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">         
+                            <a href="#" class="btn btn-primary btn-lg add-team-button top-button-width" id="add-team-btn" v-on:click="createTeamAndRedirect()">Add a team</a>
                         </div>
-                        <ul v-for="item in tloaded">
-                            <a href="#" class="" v-on:click="setSelectedTeam(item)">
-                                <div class="media">
-                                    <img src="https://image.flaticon.com/icons/png/128/27/27825.png" height="22" width="22" class="mr-3" alt="Team Icon">
-                                    <div class="media-body">
-                                        <h5 class="mt-0">{{ item }}</h5>
+                        <div class="col-md-12">
+                            <a href="#" class="btn btn-primary btn-lg clear-teams-button top-button-width" id="clear-teams-btn" v-on:click="deleteTeams()">Clear Teams</a>
+                        </div>
+                        <div class="col-md-12">
+                            <a href="#" class="btn btn-primary btn-lg clear-buzzer-times-button top-button-width" id="clear-teams-btn" v-on:click="clearClickedTime()">Clear Buzzer Times</a>
+                        </div>
+                        <hr>
+
+                        <div class="col-md-4">
+                            <h2> TEAMS: </h2>
+                            <div v-if="tloaded.length == 0">
+                                <h2> No Teams</h2>
+                            </div>
+                            <ul v-for="item in tloaded">
+                                <a href="#" class="" v-on:click="setSelectedTeam(item)">
+                                    <div class="media">
+                                        <img src="https://image.flaticon.com/icons/png/128/27/27825.png" height="22" width="22" class="mr-2" alt="Team Icon">
+                                        <div class="media-body">
+                                            <h5 class="mt-0">{{ item }}</h5>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
-                        </ul>
+                                </a>
+                            </ul>
+                        </div>
+
                     </div>
                 </div>
-
-
+            </div>  
+                
+            <div class="container">
                 <div class="col-md-6 buzzer-side">      
-                    <h2 class="buzzer-side">SELECTED TEAM:</h2>
+                    <h2 class="selected-team">SELECTED TEAM:</h2>
                     <h1>{{ selectedTeam }} </h1>
                     <div v-if="selectedTeam == 'No team has been selected'">
                         <h6>To select a team, click one of the available teams.</h6>
                     </div>
-                    <div class="container" style="margin-top: 50px" v-if="selectedTeam != 'No team has been selected'">
+                    <div class="container buzzer" v-if="selectedTeam != 'No team has been selected'">
                         <a href="#" class="btn btn-danger btn-lg buzzer-button" v-on:click="updateClickedTime(selectedTeam)">Buzzer</a>
                         <h2 class="buzzed-teams">BUZZED TEAMS:</h2>
                         <ul v-for="(team, index) in orderedBuzzClicks">
-                                {{ index+1 }}. {{ team.name }}
+                            {{ index+1 }}. {{ team.name }}
                         </ul>
                     </div>
                 </div>
-            </div>
+            </div>  
         </div>
-    </div>
+    </main>
+
     <!-- development version, includes helpful console warnings -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="//cdn.jsdelivr.net/combine/npm/jquery@3.2.1,npm/axios@0.17.0/dist/axios.min.js"></script>

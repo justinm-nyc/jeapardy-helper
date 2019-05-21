@@ -6,37 +6,11 @@
     display: block;
     text-align: center;
 }
-.navbar .navbar-brand > .title {
-    display: block;
-    font-size: 16px;
-    color: #1b2733;
-    font-weight: 600;
-    line-height: 22px;
-    margin-bottom: 5px;
-}
-.navbar .navbar-brand > .commentary {
-    display: block;
-    font-size: 12px;
-    color: #707e8d;
-}
+
 
 ul {
     margin-bottom: 0px;
     padding-left: 0px;
-}
-
-.add-team-button{
-    background-color: #007991;
-}
-
-.clear-buzzer-times-button{
-    background-color: #A0B2A6;
-    border-color: #A0B2A6;
-}
-
-.clear-teams-button{
-    background-color: #439A86;
-    border-color: #439A86;
 }
 
 
@@ -48,6 +22,7 @@ ul {
     padding-bottom: 20px;
     padding-top: 20px;
     text-align: center;
+    background-color: #F1F5F2;
 }
 
 .media{
@@ -57,6 +32,7 @@ ul {
 
 .buzzer-side{
     padding-top: 20px;
+    margin-bottom: 50px;
 }
 
 
@@ -71,11 +47,11 @@ ul {
         width: 32%;
     }
 
-    h2.buzzer-side{
+    .buzzer-side >  h2{
         color: #439A86;
     }
 
-    h2.buzzed-teams{
+    .buzzed-teams > h2{
         color: #E0A458;
     }
 
@@ -85,14 +61,33 @@ ul {
         text-align: center;
     }
 
+    .buzzer{
+        margin-top: 25px;
+    }
+
     .teams-side{
-        background-color: #F1F5F2;
         color: black;
+        text-align: center;
     }
 
     .clear-buzzer-times-button{
-        width: 195px;
+        background-color: #A0B2A6;
+        border-color: #A0B2A6;
         margin-top: 5px;
+    }
+
+    .clear-teams-button{
+        background-color: #439A86;
+        border-color: #439A86;
+        margin-top: 5px;
+    }    
+
+    .add-team-button{
+        background-color: #007991;
+    }
+    
+    .top-button-width{
+        width: 205px;
     }
 
     .logo{
@@ -103,8 +98,11 @@ ul {
         color:  #007991;
     }
 
+    .navbar{
+        background-color: #F1F5F2;
+    }
 
-
-
-
+    .selected-team{
+        margin-bottom: 0px;
+    }
 }
