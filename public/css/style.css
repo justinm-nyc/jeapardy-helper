@@ -67,14 +67,25 @@ ul {
         /* top layer */
         z-index: 9999;
     }
-    
-    #sidebar.active {
-        margin-left: -250px;
-    }
 
     #content{
         margin-top: 45px;
+        text-align:center;
+        margin-left: 250px;
     }
+
+    .sidebar-padding{
+        padding-left: 8px;
+    }
+
+    .fullscreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        overflow: auto;
+      }
 
     .sidebar-teams-side{
         margin-top: 45px;
@@ -95,7 +106,7 @@ ul {
     }
 
     .logo{
-        max-width: 30%;
+        max-width: 20%;
     }
 
     .desktop-nav{
@@ -115,6 +126,12 @@ ul {
         display: flex;
         width: 100%;
         align-items: stretch;
+    }
+
+    ul{
+        padding: auto;
+        margin: auto;
+        width: 50%;
     }
 }
 
