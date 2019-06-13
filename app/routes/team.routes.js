@@ -7,10 +7,8 @@ module.exports = (app) => {
     // Retrieve all Teams
     app.get('/teams', teams.findAll);
 
-    // Retrieve a single Note with noteId
-    // app.get('/teams/:noteId', teams.findOne);
 
-    // Update a team clickTime with tiimestamp
+    // Update a team clickTime with timestamp
     app.put('/teams/:teamName/clickedBuzzer', teams.update);
 
 

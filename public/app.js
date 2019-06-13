@@ -1,7 +1,7 @@
+
 var vm = new Vue({
     el: '#jeopardy-helper-app',
     data: {
-        message: 'Hello',
         tloaded: [],
         selectedTeam: 'No team has been selected',
         buzzedTeams: []
@@ -33,9 +33,7 @@ var vm = new Vue({
     watch: {
         tloaded: function (){
             this.reloadTeams()
-        },
-        selectedTeam: function (){},
-        buzzedTeams: function (){}
+        }
     },
     created() {
         /**
@@ -68,7 +66,8 @@ var vm = new Vue({
         reloadTeams: async function(){
             var loadedTeamsArray = []
             var loadedBuzzedTeamsArray = []
-            let result = await axios.get('/teams').then(response => {
+            let result = await axios.get('/teams')
+            .then(response => {
                 const teams = response.data
                 for (const key in teams) {
                     if (teams.hasOwnProperty(key)) {
