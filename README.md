@@ -15,7 +15,7 @@ Prerequisites
 npm install
 ```
 
-3. Make sure MongoDB is running in the background
+3. Make sure MongoDB is running in the background or in the config/database.config.js file change the URl to your MongoDB URL
 
 4. Run application with
 ```
